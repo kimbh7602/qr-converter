@@ -1,0 +1,80 @@
+:root {
+  --color-bg: oklch(98% 0.01 90);
+  --color-bg-elevated: oklch(100% 0 0);
+  --color-ink: oklch(20% 0.01 260);
+  --color-ink-muted: oklch(48% 0.01 260);
+  --color-ink-subtle: oklch(68% 0.01 260);
+  --color-border: oklch(90% 0.005 260);
+  --color-border-strong: oklch(82% 0.01 260);
+  --color-accent: oklch(62% 0.2 28);
+  --color-accent-ink: oklch(98% 0.01 90);
+  --color-accent-soft: oklch(96% 0.04 28);
+
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+
+  --shadow-sm: 0 1px 2px oklch(20% 0.01 260 / 0.06);
+  --shadow-md: 0 4px 12px oklch(20% 0.01 260 / 0.08),
+    0 2px 4px oklch(20% 0.01 260 / 0.04);
+  --shadow-lg: 0 24px 48px oklch(20% 0.01 260 / 0.12),
+    0 8px 16px oklch(20% 0.01 260 / 0.06);
+
+  --duration-fast: 120ms;
+  --duration-normal: 220ms;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --font-sans: -apple-system, BlinkMacSystemFont, "Inter", "Pretendard",
+    "Segoe UI", system-ui, sans-serif;
+  --font-mono: "SF Mono", "JetBrains Mono", Menlo, Consolas, monospace;
+  --font-serif: "Iowan Old Style", "Apple Garamond", Georgia, serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg);
+  color: var(--color-ink);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 16px;
+  line-height: 1.5;
+  min-height: 100dvh;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input,
+button {
+  font: inherit;
+}
+
+a {
+  color: inherit;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
