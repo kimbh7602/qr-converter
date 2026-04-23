@@ -1,72 +1,93 @@
 .main {
   min-height: 100dvh;
-  max-width: 1040px;
+  max-width: 1200px;
   margin: 0 auto;
-  padding: clamp(2rem, 4vw, 4rem) clamp(1.25rem, 4vw, 3rem);
+  padding: clamp(1.25rem, 3vw, 2.5rem) clamp(1.25rem, 4vw, 3rem);
   display: flex;
   flex-direction: column;
-  gap: clamp(2rem, 4vw, 3rem);
 }
 
 .header {
   display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  max-width: 560px;
-}
-
-.brand {
-  display: inline-flex;
   align-items: center;
-  gap: 0.625rem;
+  justify-content: space-between;
+  padding-bottom: 0.75rem;
+  border-bottom: var(--rule-width) solid var(--color-rule);
 }
 
-.brandMark {
-  width: 22px;
-  height: 22px;
-  border-radius: 6px;
-  background:
-    linear-gradient(135deg, var(--color-accent), oklch(52% 0.22 28)),
-    var(--color-accent);
-  box-shadow:
-    inset 0 0 0 2px oklch(100% 0 0 / 0.3),
-    0 2px 6px oklch(62% 0.2 28 / 0.3);
-  position: relative;
-}
-
-.brandMark::after {
-  content: "";
-  position: absolute;
-  inset: 6px;
-  border-radius: 2px;
-  background: var(--color-accent-ink);
-}
-
-.brandName {
-  font-family: var(--font-mono);
-  font-size: 0.875rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+.wordmark {
+  font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  line-height: 1;
   color: var(--color-ink);
+  display: inline-flex;
+  align-items: baseline;
+  transition: color var(--duration-fast) var(--ease-out-expo);
 }
 
-.tagline {
-  font-family: var(--font-serif);
-  font-size: clamp(1.5rem, 1.1rem + 1.6vw, 2.25rem);
-  line-height: 1.25;
-  letter-spacing: -0.01em;
-  color: var(--color-ink);
+.wordmark:hover {
+  color: var(--color-accent);
+}
+
+.wordmarkDot {
+  color: var(--color-accent);
+}
+
+.sourceLink {
+  font-size: clamp(1rem, 0.95rem + 0.25vw, 1.25rem);
+  color: var(--color-accent);
+  letter-spacing: -0.02em;
+  transition: color var(--duration-fast) var(--ease-out-expo);
+}
+
+.sourceLink:hover {
+  color: var(--color-accent-hot);
+}
+
+.hero {
+  padding: clamp(2rem, 5vw, 4.5rem) 0 clamp(1.5rem, 3vw, 2.5rem);
+  border-bottom: var(--rule-width) solid var(--color-rule);
+}
+
+.heroHeadline {
   margin: 0;
+  font-size: clamp(3rem, 1.2rem + 9vw, 10rem);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.05em;
+  color: var(--color-ink);
+}
+
+.heroAccent {
+  color: var(--color-accent);
+}
+
+.heroSub {
+  margin: clamp(1rem, 2vw, 1.75rem) 0 0;
+  font-size: clamp(1.125rem, 0.9rem + 0.8vw, 1.5rem);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  color: var(--color-ink-muted);
+  max-width: 40ch;
+  line-height: 1.25;
 }
 
 .footer {
   margin-top: auto;
-  padding-top: 2rem;
-  font-size: 0.8125rem;
-  color: var(--color-ink-subtle);
-  border-top: 1px solid var(--color-border);
+  padding-top: 1rem;
+  border-top: var(--rule-width) solid var(--color-rule);
   display: flex;
+  align-items: center;
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  color: var(--color-ink-muted);
+}
+
+.footerMeta {
+  color: var(--color-ink-subtle);
 }

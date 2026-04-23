@@ -1,10 +1,18 @@
 import type { Metadata } from "next";
+import { Inter_Tight } from "next/font/google";
 import "./globals.css";
 
+const interTight = Inter_Tight({
+  subsets: ["latin"],
+  weight: ["500", "600", "700", "800"],
+  variable: "--font-grotesk",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "QR Converter — URL을 QR 코드로",
+  title: "qr — url to qr, instantly",
   description:
-    "URL을 붙여넣고 SVG 또는 PNG로 다운로드하세요. 빠르고 간단한 QR 코드 생성기.",
+    "Paste a URL, get a QR code. Download as SVG or PNG. Runs entirely in your browser.",
 };
 
 export default function RootLayout({
@@ -13,7 +21,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="ko">
+    <html lang="ko" className={interTight.variable}>
       <body>{children}</body>
     </html>
   );

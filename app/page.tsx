@@ -5,20 +5,33 @@ export default function HomePage() {
   return (
     <main className={styles.main}>
       <header className={styles.header}>
-        <div className={styles.brand}>
-          <span className={styles.brandMark} aria-hidden="true" />
-          <span className={styles.brandName}>QR Converter</span>
-        </div>
-        <p className={styles.tagline}>
-          URL을 붙여넣으면 즉시 QR 코드가 생성됩니다. SVG 또는 PNG로
-          다운로드하세요.
-        </p>
+        <a href="/" className={styles.wordmark} aria-label="qr home">
+          qr<span className={styles.wordmarkDot}>.</span>
+        </a>
+        <a
+          className={styles.sourceLink}
+          href="https://github.com/kimbh7602/qr-converter"
+          target="_blank"
+          rel="noreferrer"
+        >
+          source
+        </a>
       </header>
+
+      <section className={styles.hero}>
+        <h1 className={styles.heroHeadline}>
+          url in. <span className={styles.heroAccent}>qr out.</span>
+        </h1>
+        <p className={styles.heroSub}>
+          paste a link. download as svg or png. nothing leaves your browser.
+        </p>
+      </section>
 
       <QrGenerator />
 
       <footer className={styles.footer}>
-        <span>전부 브라우저에서 처리됩니다 — 서버에 URL이 전송되지 않습니다.</span>
+        <span>runs entirely in your browser</span>
+        <span className={styles.footerMeta}>© 2026 / no tracking</span>
       </footer>
     </main>
   );

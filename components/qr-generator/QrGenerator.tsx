@@ -14,10 +14,10 @@ import styles from "./qr-generator.module.css";
 type ErrorLevel = "L" | "M" | "Q" | "H";
 
 const ERROR_LEVELS: { value: ErrorLevel; label: string; hint: string }[] = [
-  { value: "L", label: "L", hint: "낮음 · 7%" },
-  { value: "M", label: "M", hint: "보통 · 15%" },
-  { value: "Q", label: "Q", hint: "높음 · 25%" },
-  { value: "H", label: "H", hint: "최고 · 30%" },
+  { value: "L", label: "L", hint: "7%" },
+  { value: "M", label: "M", hint: "15%" },
+  { value: "Q", label: "Q", hint: "25%" },
+  { value: "H", label: "H", hint: "30%" },
 ];
 
 const PNG_SIZE = 1024;
@@ -61,7 +61,7 @@ export function QrGenerator() {
       errorCorrectionLevel: errorLevel,
       margin: 1,
       color: {
-        dark: "#111111",
+        dark: "#0a0a0a",
         light: "#ffffff",
       },
     } as const;
@@ -79,7 +79,7 @@ export function QrGenerator() {
       .catch((err: unknown) => {
         if (cancelled) return;
         const message =
-          err instanceof Error ? err.message : "QR 생성에 실패했습니다.";
+          err instanceof Error ? err.message : "could not generate qr.";
         setError(message);
         setSvgMarkup("");
         setPngDataUrl("");
@@ -112,7 +112,7 @@ export function QrGenerator() {
       setCopyState("copied");
       window.setTimeout(() => setCopyState("idle"), 1400);
     } catch {
-      // Clipboard blocked — ignore silently, user can copy manually.
+      // clipboard blocked — silent.
     }
   }, [url]);
 
@@ -124,54 +124,62 @@ export function QrGenerator() {
   return (
     <section className={styles.wrap} aria-labelledby="qr-heading">
       <h2 id="qr-heading" className={styles.srOnly}>
-        QR 코드 생성기
+        qr generator
       </h2>
 
       <div className={styles.grid}>
         <div className={styles.form}>
-          <label htmlFor="url-input" className={styles.label}>
-            URL
-          </label>
-          <div className={styles.inputRow}>
-            <input
-              id="url-input"
-              ref={inputRef}
-              type="url"
-              inputMode="url"
-              autoComplete="off"
-              spellCheck={false}
-              placeholder="https://example.com"
-              className={styles.input}
-              value={url}
-              onChange={(event) => setUrl(event.target.value)}
-            />
-            {url && (
-              <button
-                type="button"
-                className={styles.iconButton}
-                onClick={handleClear}
-                aria-label="입력 지우기"
-              >
-                <svg
-                  width="14"
-                  height="14"
-                  viewBox="0 0 14 14"
-                  fill="none"
-                  aria-hidden="true"
+          <div className={styles.field}>
+            <label htmlFor="url-input" className={styles.label}>
+              <span className={styles.labelIndex}>1</span>
+              <span>paste url</span>
+            </label>
+            <div className={styles.inputRow}>
+              <input
+                id="url-input"
+                ref={inputRef}
+                type="url"
+                inputMode="url"
+                autoComplete="off"
+                spellCheck={false}
+                placeholder="https://example.com"
+                className={styles.input}
+                value={url}
+                onChange={(event) => setUrl(event.target.value)}
+              />
+              {url && (
+                <button
+                  type="button"
+                  className={styles.iconButton}
+                  onClick={handleClear}
+                  aria-label="clear input"
                 >
-                  <path
-                    d="M3 3l8 8M11 3l-8 8"
-                    stroke="currentColor"
-                    strokeWidth="1.5"
-                    strokeLinecap="round"
-                  />
-                </svg>
-              </button>
-            )}
+                  <svg
+                    width="14"
+                    height="14"
+                    viewBox="0 0 14 14"
+                    fill="none"
+                    aria-hidden="true"
+                  >
+                    <path
+                      d="M3 3l8 8M11 3l-8 8"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </button>
+              )}
+            </div>
           </div>
 
           <fieldset className={styles.fieldset}>
-            <legend className={styles.legend}>오류 복원 수준</legend>
+            <legend className={styles.legend}>
+              <span className={styles.label}>
+                <span className={styles.labelIndex}>2</span>
+                <span>error correction</span>
+              </span>
+            </legend>
             <div className={styles.segmented} role="radiogroup">
               {ERROR_LEVELS.map((level) => {
                 const selected = errorLevel === level.value;
@@ -194,33 +202,39 @@ export function QrGenerator() {
             </div>
           </fieldset>
 
-          <div className={styles.actions}>
-            <button
-              type="button"
-              className={styles.primary}
-              onClick={handleDownloadSvg}
-              disabled={!svgMarkup}
-            >
-              <DownloadIcon />
-              <span>SVG 다운로드</span>
-            </button>
-            <button
-              type="button"
-              className={styles.secondary}
-              onClick={handleDownloadPng}
-              disabled={!pngDataUrl}
-            >
-              <DownloadIcon />
-              <span>PNG 다운로드</span>
-            </button>
-            <button
-              type="button"
-              className={styles.ghost}
-              onClick={handleCopy}
-              disabled={!url}
-            >
-              {copyState === "copied" ? "복사됨" : "URL 복사"}
-            </button>
+          <div className={styles.field}>
+            <span className={styles.label}>
+              <span className={styles.labelIndex}>3</span>
+              <span>download</span>
+            </span>
+            <div className={styles.actions}>
+              <button
+                type="button"
+                className={styles.primary}
+                onClick={handleDownloadSvg}
+                disabled={!svgMarkup}
+              >
+                <DownloadIcon />
+                <span>svg</span>
+              </button>
+              <button
+                type="button"
+                className={styles.secondary}
+                onClick={handleDownloadPng}
+                disabled={!pngDataUrl}
+              >
+                <DownloadIcon />
+                <span>png</span>
+              </button>
+              <button
+                type="button"
+                className={styles.ghost}
+                onClick={handleCopy}
+                disabled={!url}
+              >
+                {copyState === "copied" ? "copied" : "copy url"}
+              </button>
+            </div>
           </div>
 
           {error && <p className={styles.error}>{error}</p>}
@@ -232,18 +246,17 @@ export function QrGenerator() {
               <div
                 className={styles.svgHost}
                 dangerouslySetInnerHTML={{ __html: svgMarkup }}
-                aria-label={`QR 코드: ${deferredUrl}`}
+                aria-label={`qr code for ${deferredUrl}`}
                 role="img"
               />
             ) : (
               <div className={styles.placeholder} aria-hidden="true">
-                <GridIcon />
-                <span>URL을 입력하면 QR 코드가 표시됩니다</span>
+                <span>— paste a url —</span>
               </div>
             )}
           </div>
           <div className={styles.meta}>
-            <span className={styles.metaKey}>대상</span>
+            <span className={styles.metaKey}>→</span>
             <span className={styles.metaValue} title={deferredUrl}>
               {deferredUrl || "—"}
             </span>
@@ -274,32 +287,12 @@ function DownloadIcon() {
       aria-hidden="true"
     >
       <path
-        d="M8 2v8m0 0l3-3m-3 3L5 7M2.5 12.5h11"
+        d="M8 2v8m0 0l3-3m-3 3L5 7M2.5 13.5h11"
         stroke="currentColor"
-        strokeWidth="1.5"
+        strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-    </svg>
-  );
-}
-
-function GridIcon() {
-  return (
-    <svg
-      width="40"
-      height="40"
-      viewBox="0 0 40 40"
-      fill="none"
-      aria-hidden="true"
-    >
-      <rect x="5" y="5" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <rect x="25" y="5" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <rect x="5" y="25" width="10" height="10" rx="2" stroke="currentColor" strokeWidth="1.5" />
-      <rect x="22" y="22" width="4" height="4" fill="currentColor" />
-      <rect x="30" y="22" width="4" height="4" fill="currentColor" />
-      <rect x="22" y="30" width="4" height="4" fill="currentColor" />
-      <rect x="30" y="30" width="4" height="4" fill="currentColor" />
     </svg>
   );
 }
